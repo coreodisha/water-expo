@@ -1,0 +1,835 @@
+/* ==========================================================================
+   DESIGN SYSTEM & CUSTOM PROPERTIES (Deep Water Tech Theme)
+   ========================================================================== */
+:root {
+    /* Color Palette */
+    --bg-deep-blue: #030816;
+    --bg-grad-start: #040d21;
+    --bg-grad-end: #020712;
+    
+    --color-aqua: #00f2fe;
+    --color-royal-blue: #0072ff;
+    --color-teal: #14f7b2;
+    --color-glow-blue: rgba(0, 242, 254, 0.4);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #a3b8cc;
+    --text-muted: #647d94;
+    
+    /* Font Pairings */
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    
+    /* Glassmorphism Presets */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-border-hover: rgba(0, 242, 254, 0.3);
+    --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    --glass-blur: blur(16px);
+    
+    /* System Transitions */
+    --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+    --transition-speed: 0.3s;
+}
+
+/* ==========================================================================
+   RESET & BASE STYLES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: var(--bg-deep-blue);
+    background-image: radial-gradient(circle at 50% 50%, var(--bg-grad-start) 0%, var(--bg-grad-end) 100%);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Canvas overlay for particle effect */
+#bubble-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   AESTHETIC DECORATIVE ELEMENTS (Orbs & Lights)
+   ========================================================================== */
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.45;
+    mix-blend-mode: screen;
+}
+
+.orb-1 {
+    top: -10%;
+    left: 15%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, var(--color-royal-blue) 0%, transparent 70%);
+    animation: orbFloat 25s infinite alternate ease-in-out;
+}
+
+.orb-2 {
+    bottom: -10%;
+    right: 10%;
+    width: 45vw;
+    height: 45vw;
+    background: radial-gradient(circle, var(--color-aqua) 0%, transparent 70%);
+    animation: orbFloat 20s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes orbFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(5%, 8%) scale(1.1); }
+    100% { transform: translate(-5%, -5%) scale(0.9); }
+}
+
+/* ==========================================================================
+   CONTAINER & LAYOUT
+   ========================================================================== */
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 950px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3.5rem;
+}
+
+.logo-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: -1rem;
+    transition: transform 0.4s var(--ease-smooth);
+}
+
+.logo-divider {
+    width: 1px;
+    height: 55px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.15) 20%, rgba(255, 255, 255, 0.15) 80%, transparent);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.1);
+}
+
+.company-logo {
+    max-width: 270px;
+    height: auto;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35)) drop-shadow(0 0 25px rgba(0, 242, 254, 0.05));
+    transition: all 0.4s var(--ease-smooth);
+}
+
+.expo-logo {
+    max-width: 200px;
+    height: auto;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35)) drop-shadow(0 0 25px rgba(0, 242, 254, 0.05));
+    transition: all 0.4s var(--ease-smooth);
+}
+
+.logo-wrapper:hover .company-logo {
+    transform: translateY(-4px) scale(1.02);
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 40px rgba(0, 242, 254, 0.25));
+}
+
+.logo-wrapper:hover .expo-logo {
+    transform: translateY(-4px) scale(1.02);
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 40px rgba(0, 242, 254, 0.25));
+}
+
+   STALL BADGE (Top Floating Element)
+   ========================================================================== */
+.stall-badge-wrapper {
+    perspective: 1000px;
+}
+
+.stall-badge {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    padding: 0.85rem 1.75rem;
+    border-radius: 50px;
+    box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.4s var(--ease-smooth);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Water drop reflection shine effect */
+.stall-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1) 20%,
+        rgba(255, 255, 255, 0.25) 60%,
+        transparent
+    );
+    transform: skewX(-25deg);
+    transition: none;
+}
+
+.stall-badge:hover::before {
+    left: 150%;
+    transition: left 0.8s ease-in-out;
+}
+
+.stall-badge:hover {
+    border-color: var(--glass-border-hover);
+    box-shadow: 0 15px 30px rgba(0, 242, 254, 0.15), var(--glass-shadow);
+    transform: translateY(-4px) scale(1.02);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-teal);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 0 10px var(--color-teal);
+}
+
+.pulse-dot::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 2px solid var(--color-teal);
+    border-radius: 50%;
+    animation: dotPulse 2s infinite ease-out;
+}
+
+@keyframes dotPulse {
+    0% { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
+
+.badge-icon {
+    color: var(--color-aqua);
+    font-size: 1.1rem;
+    text-shadow: 0 0 8px var(--color-glow-blue);
+}
+
+.badge-text {
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+}
+
+.badge-text strong {
+    color: var(--color-aqua);
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   COUNTDOWN TIMER DISPLAY
+   ========================================================================== */
+.countdown-heading {
+    margin-bottom: -2.5rem;
+}
+
+.countdown-label {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 5px;
+    color: var(--text-muted);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    position: relative;
+    display: inline-block;
+}
+
+.countdown-label::before,
+.countdown-label::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 25px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--text-muted));
+}
+
+.countdown-label::before {
+    right: 105%;
+}
+
+.countdown-label::after {
+    left: 105%;
+    transform: rotate(180deg);
+}
+
+.countdown-container {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+    flex-wrap: wrap;
+}
+
+.countdown-card {
+    flex: 1;
+    min-width: 150px;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card-number-wrapper {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    height: 140px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.4s var(--ease-smooth);
+}
+
+.card-number {
+    font-family: var(--font-heading);
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg, #ffffff 30%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    line-height: 1;
+}
+
+/* Card Glow Effect on Hover */
+.card-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, var(--color-glow-blue) 0%, transparent 60%);
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+    z-index: 1;
+    transition: all 0.4s var(--ease-smooth);
+    pointer-events: none;
+}
+
+.countdown-card:hover .card-number-wrapper {
+    transform: translateY(-8px) scale(1.03);
+    border-color: var(--glass-border-hover);
+    box-shadow: 0 25px 40px rgba(0, 242, 254, 0.12), var(--glass-shadow);
+}
+
+.countdown-card:hover .card-glow {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.countdown-card:hover .card-number {
+    background: linear-gradient(135deg, #ffffff 40%, var(--color-aqua) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.card-label {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.countdown-card:hover .card-label {
+    color: var(--color-aqua);
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+}
+
+/* ==========================================================================
+   EXPO DETAILS SECTION
+   ========================================================================== */
+.expo-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
+}
+
+.expo-title {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 3rem;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    max-width: 750px;
+    color: var(--text-primary);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.highlight-city {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--color-aqua) 0%, var(--color-royal-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 0.5rem;
+    filter: drop-shadow(0 2px 5px rgba(0, 242, 254, 0.25));
+}
+
+.expo-location {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 30px;
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.location-icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-aqua);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+}
+
+.location-text {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.2px;
+}
+
+.expo-location:hover .location-icon-box {
+    background: var(--color-aqua);
+    color: var(--bg-deep-blue);
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 0 25px var(--color-aqua);
+}
+
+.expo-location:hover .location-text {
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   BUTTONS & ACTIONS
+   ========================================================================== */
+.action-buttons {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.btn {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 0.9rem 1.8rem;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.4s var(--ease-smooth);
+    text-decoration: none;
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-aqua) 0%, var(--color-royal-blue) 100%);
+    color: var(--bg-deep-blue);
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(0, 114, 255, 0.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0, 242, 254, 0.5);
+    background: linear-gradient(135deg, #00f2fe 30%, #00d2ff 100%);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(0, 242, 254, 0.3);
+    color: var(--color-aqua);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.btn-glass {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid transparent;
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--glass-border);
+    color: var(--text-primary);
+    transform: translateY(-4px);
+}
+
+.btn-register {
+    background: linear-gradient(135deg, var(--color-teal) 0%, var(--color-aqua) 100%);
+    color: var(--bg-deep-blue);
+    font-weight: 800;
+    box-shadow: 0 10px 30px rgba(20, 247, 178, 0.4);
+    position: relative;
+}
+
+.btn-register:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(20, 247, 178, 0.6);
+    background: linear-gradient(135deg, #2bf8be 0%, #3bf4ff 100%);
+}
+
+.btn-register.pulse-glow::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 14px;
+    border: 2px solid var(--color-teal);
+    animation: btnPulse 2s infinite ease-out;
+    pointer-events: none;
+}
+
+@keyframes btnPulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.08, 1.25); opacity: 0; }
+}
+
+.btn i {
+    font-size: 1.05rem;
+    transition: transform 0.3s ease;
+}
+
+.btn:hover i {
+    transform: scale(1.15);
+}
+
+/* ==========================================================================
+   WAVE BACKGROUND SCENE
+   ========================================================================== */
+.wave-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 12vh;
+    min-height: 80px;
+    max-height: 150px;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.waves {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Parallax Wave Animation */
+.parallax > use {
+    animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+}
+.parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+}
+
+@keyframes move-forever {
+    0% {
+        transform: translate3d(-90px,0,0);
+    }
+    100% {
+        transform: translate3d(85px,0,0);
+    }
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATION (Clipboard Feedback)
+   ========================================================================== */
+.toast-notification {
+    position: fixed;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast-notification.show {
+    bottom: 40px;
+}
+
+.toast-content {
+    background: rgba(4, 20, 48, 0.85);
+    border: 1px solid var(--color-teal);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    padding: 0.9rem 1.8rem;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(20, 247, 178, 0.15), var(--glass-shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.toast-icon {
+    color: var(--color-teal);
+    font-size: 1.15rem;
+}
+
+#toast-message {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+}
+
+/* ==========================================================================
+   KEYFRAME ANIMATIONS
+   ========================================================================== */
+.animate-fade-in-down {
+    animation: fadeInDown 1s var(--ease-smooth) forwards;
+}
+
+.animate-fade-in {
+    animation: fadeIn 1s var(--ease-smooth) forwards;
+}
+
+.animate-scale-up {
+    animation: scaleUp 1s var(--ease-smooth) forwards;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 1s var(--ease-smooth) forwards;
+}
+
+.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.delay-2 {
+    animation-delay: 0.4s;
+}
+
+.animate-bounce {
+    animation: subtleBounce 2s infinite ease-in-out;
+}
+
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes scaleUp {
+    0% { opacity: 0; transform: scale(0.92); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes subtleBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem 1rem;
+        gap: 2.25rem;
+    }
+    
+    .logo-wrapper {
+        flex-direction: column;
+        gap: 1.25rem;
+        margin-bottom: 0;
+    }
+    
+    .logo-divider {
+        display: none;
+    }
+    
+    .company-logo {
+        max-width: 220px;
+    }
+    
+    .expo-logo {
+        max-width: 170px;
+    }
+    
+    .stall-badge {
+        padding: 0.65rem 1.25rem;
+    }
+    
+    .badge-text {
+        font-size: 0.85rem;
+    }
+    
+    .countdown-heading {
+        margin-bottom: -1.75rem;
+    }
+    
+    .countdown-label {
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+    }
+    
+    .countdown-container {
+        gap: 0.85rem;
+    }
+    
+    .countdown-card {
+        min-width: 100px;
+        max-width: 130px;
+        flex: 1 1 40%;
+    }
+    
+    .card-number-wrapper {
+        height: 100px;
+        border-radius: 14px;
+    }
+    
+    .card-number {
+        font-size: 3rem;
+    }
+    
+    .card-label {
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+    }
+    
+    .expo-title {
+        font-size: 2rem;
+    }
+    
+    .highlight-city {
+        font-size: 1.6rem;
+    }
+    
+    .location-text {
+        font-size: 1rem;
+    }
+    
+    .action-buttons {
+        gap: 0.85rem;
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 320px;
+        padding: 0.8rem 1.5rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .countdown-card {
+        min-width: 60px;
+        flex: 1 1 45%;
+    }
+    
+    .card-number-wrapper {
+        height: 80px;
+    }
+    
+    .card-number {
+        font-size: 2.2rem;
+    }
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>45th Water India's Water Expo Countdown</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Countdown timer for the 45th Water India's Water Expo at Guwahati, Assam. Visit us in Hall 3, Stall No. F15 at Maniram Dewan Trade Centre.">
+    <meta name="keywords" content="Water India Expo, Water Expo Guwahati, Maniram Dewan Trade Centre, Water Expo 2026, Guwahati Event, Water Stall F15">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Canvas for Liquid Bubble Effect -->
+    <canvas id="bubble-canvas"></canvas>
+    
+    <!-- Decorative Glowing Lights -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    
+    <!-- Main Content Container -->
+    <main class="container">
+        
+        <!-- Company & Expo Logos (Top of the Page) -->
+        <div class="logo-wrapper animate-fade-in-down">
+            <img src="logo.png" alt="Kalinga Industries Logo" class="company-logo">
+            <div class="logo-divider"></div>
+            <img src="expo_logo.png" alt="Water Expo Logo" class="expo-logo">
+        </div>
+        
+        <!-- Stall Badge (Above Countdown) -->
+        <div class="stall-badge-wrapper animate-fade-in-down">
+            <div class="stall-badge">
+                <span class="pulse-dot"></span>
+                <i class="fa-solid fa-store badge-icon"></i>
+                <span class="badge-text">Visit our stall in <strong>Hall 3, Stall No. F15</strong></span>
+            </div>
+        </div>
+        
+        <!-- Countdown Title Info -->
+        <div class="countdown-heading animate-fade-in">
+            <span class="countdown-label">EXPO COMMENCES IN</span>
+        </div>
+
+        <!-- Countdown Timer -->
+        <div class="countdown-container animate-scale-up" id="countdown">
+            <!-- Days -->
+            <div class="countdown-card">
+                <div class="card-number-wrapper">
+                    <span class="card-number" id="days">00</span>
+                    <div class="card-glow"></div>
+                </div>
+                <span class="card-label">Days</span>
+            </div>
+            
+            <!-- Hours -->
+            <div class="countdown-card">
+                <div class="card-number-wrapper">
+                    <span class="card-number" id="hours">00</span>
+                    <div class="card-glow"></div>
+                </div>
+                <span class="card-label">Hours</span>
+            </div>
+            
+            <!-- Minutes -->
+            <div class="countdown-card">
+                <div class="card-number-wrapper">
+                    <span class="card-number" id="minutes">00</span>
+                    <div class="card-glow"></div>
+                </div>
+                <span class="card-label">Minutes</span>
+            </div>
+            
+            <!-- Seconds -->
+            <div class="countdown-card">
+                <div class="card-number-wrapper">
+                    <span class="card-number" id="seconds">00</span>
+                    <div class="card-glow"></div>
+                </div>
+                <span class="card-label">Seconds</span>
+            </div>
+        </div>
+
+        <!-- Expo Main Info (Below Countdown) -->
+        <section class="expo-info animate-fade-in-up">
+            <h1 class="expo-title" id="expo-title">
+                45th Water India's Water Expo
+                <span class="highlight-city">at Guwahati, Assam</span>
+            </h1>
+            
+            <!-- Location Sub-Header -->
+            <div class="expo-location">
+                <div class="location-icon-box">
+                    <i class="fa-solid fa-location-dot animate-bounce"></i>
+                </div>
+                <span class="location-text">Maniram Dewan Trade Centre</span>
+            </div>
+        </section>
+
+        <!-- Action / Interactive Buttons -->
+        <div class="action-buttons animate-fade-in-up delay-2">
+            <a href="https://www.waterindia.net/xyz-online-registration.html" target="_blank" rel="noopener noreferrer" class="btn btn-register pulse-glow" id="btn-register">
+                <i class="fa-solid fa-user-pen"></i>
+                <span>Register Now</span>
+            </a>
+            <button class="btn btn-primary" id="btn-calendar">
+                <i class="fa-regular fa-calendar-plus"></i>
+                <span>Add to Calendar</span>
+            </button>
+            <a href="https://maps.google.com/?q=Maniram+Dewan+Trade+Centre+Guwahati+Assam" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="btn-map">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Get Directions</span>
+            </a>
+            <button class="btn btn-glass" id="btn-share">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Share Expo</span>
+            </button>
+        </div>
+        
+    </main>
+
+    <!-- Bottom Aesthetic Wave Background -->
+    <div class="wave-container">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s58 18 88 18 58-18 88-18 58 18 88 18v44h-352z" />
+            </defs>
+            <g class="parallax">
+                <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(22, 119, 255, 0.07)" />
+                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(0, 242, 254, 0.1)" />
+                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255, 255, 255, 0.03)" />
+                <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(0, 168, 255, 0.15)" />
+            </g>
+        </svg>
+    </div>
+
+    <!-- Custom Toast Notification -->
+    <div id="toast" class="toast-notification">
+        <div class="toast-content">
+            <i class="fa-solid fa-circle-check toast-icon"></i>
+            <span id="toast-message">Stall info copied to clipboard!</span>
+        </div>
+    </div>
+
+    <!-- Custom Javascript -->
+    <script src="app.js"></script>
+</body>
+</html>
